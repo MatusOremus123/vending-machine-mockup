@@ -1,0 +1,100 @@
+.App {
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.vending-machine {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3x3 grid */
+  gap: 20px;
+  padding: 20px;
+  background-color: #333;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 80%; /* Wider for larger size */
+  max-width: 1200px; /* Maximum width */
+  margin: 0 auto;
+}
+
+.tray {
+  border: 2px solid #2E86C1;
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px;
+  position: relative;
+  background-color: #f9f9f9;
+  min-height: 200px; /* Bigger height for trays */
+}
+
+.door {
+  background: #808080;
+  padding: 40px; /* Larger padding for bigger doors */
+  cursor: pointer;
+  position: relative;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.door.open {
+  background: white;
+}
+
+.tray-number {
+  font-size: 36px; /* Larger font size for tray numbers */
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px; /* Larger font size for close button */
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  background-color: #eaeaea;
+  border-radius: 10px;
+}
+
+.item {
+  width: 60px; /* Larger size for items */
+  height: 60px;
+  margin: 10px;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.item:hover {
+  transform: scale(1.1);
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.square {
+  border-radius: 0;
+}
+
+.triangle {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
