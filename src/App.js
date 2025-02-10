@@ -5,66 +5,63 @@ const SHAPES = ["circle", "square", "triangle", "hexagon", "star"];
 const COLORS = ["red", "blue", "yellow", "green", "orange", "purple"];
 
 const VendingMachine = () => {
-  const [trays, setTrays] = useState(() =>
-    Array.from({ length: 9 }, (_, index) => {
-      const shape = SHAPES[index % SHAPES.length];
-      return {
-        shape,
-        colors: Array.from({ length: 3 }, () => COLORS[Math.floor(Math.random() * COLORS.length)]),
-      };
-    })
-  );
-
   const [openTrays, setOpenTrays] = useState({});
+  const [removedItems, setRemovedItems] = useState({});
+
+  const trays = Array.from({ length: 9 }, (_, index) => {
+    const shape = SHAPES[index % SHAPES.length];
+    const colors = Array.from({ length: 3 }, () => COLORS[Math.floor(Math.random() * COLORS.length)]);
+    return { shape, colors };
+  });
 
   const toggleTray = (index) => {
-    setOpenTrays((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
+    setOpenTrays((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   const removeItem = (trayIndex, itemIndex) => {
-    setTrays((prevTrays) =>
-      prevTrays.map((tray, index) =>
-        index === trayIndex
-          ? { ...tray, colors: tray.colors.filter((_, i) => i !== itemIndex) }
-          : tray
-      )
-    );
+    setRemovedItems((prev) => {
+      const updatedTray = prev[trayIndex] ? [...prev[trayIndex]] : [];
+      updatedTray.push(itemIndex);
+      return { ...prev, [trayIndex]: updatedTray };
+    });
+  };
+
+  const isItemRemoved = (trayIndex, itemIndex) => {
+    return removedItems[trayIndex]?.includes(itemIndex);
   };
 
   return (
-    <div className="App">
-      <h1>Vending Machine Mockup</h1>
+    <div className="room">
+      <h1>Vending Machine Room</h1>
+      <div className="poster poster1"></div>
+      <div className="poster poster2"></div>
       <div className="vending-machine">
-        {trays.map((tray, trayIndex) => (
-          <div key={trayIndex} className="tray">
+        {trays.map((tray, index) => (
+          <div key={index} className="tray">
             <div
-              className={`door ${openTrays[trayIndex] ? "open" : "closed"}`}
-              onClick={() => toggleTray(trayIndex)}
+              className={`door ${openTrays[index] ? "open" : "closed"}`}
+              onClick={() => toggleTray(index)}
             >
-              {openTrays[trayIndex] ? "" : <span className="tray-number">{trayIndex + 1}</span>}
+              {openTrays[index] ? "" : <span className="tray-number">{index + 1}</span>}
             </div>
-            {openTrays[trayIndex] && (
+            {openTrays[index] && (
               <div className="items">
-                {tray.colors.length > 0 ? (
-                  tray.colors.map((color, itemIndex) => (
+                {tray.colors.map((color, i) =>
+                  isItemRemoved(index, i) ? null : (
                     <div
-                      key={itemIndex}
+                      key={i}
                       className={`item ${tray.shape}`}
                       style={{ backgroundColor: color }}
-                      onClick={() => removeItem(trayIndex, itemIndex)}
+                      onClick={() => removeItem(index, i)}
                     ></div>
-                  ))
-                ) : (
-                  <p className="empty-tray">Empty Tray</p>
+                  )
                 )}
               </div>
             )}
           </div>
         ))}
       </div>
+      <div className="floor"></div> {/* Wooden floor added */}
     </div>
   );
 };
