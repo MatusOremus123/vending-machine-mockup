@@ -6,85 +6,85 @@
 
 h1 {
   margin-bottom: 20px;
+  color: #f4f4f4;
 }
 
+/* Enlarged vending machine */
 .vending-machine {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3x3 grid */
-  gap: 20px;
-  padding: 20px;
+  gap: 15px;
+  padding: 30px;
   background-color: #333;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 80%; /* Wider for larger size */
-  max-width: 1200px; /* Maximum width */
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  width: 800px; /* Increased width */
   margin: 0 auto;
 }
 
 .tray {
-  border: 2px solid #2E86C1;
-  border-radius: 10px; /* Rounded corners */
-  padding: 20px;
+  border: 3px solid #2E86C1;
+  border-radius: 15px;
   position: relative;
   background-color: #f9f9f9;
-  min-height: 200px; /* Bigger height for trays */
+  height: 180px; /* Increased height */
+  overflow: hidden;
 }
 
+/* Bigger door and smoother animation */
 .door {
   background: #808080;
-  padding: 40px; /* Larger padding for bigger doors */
+  padding: 15px;
   cursor: pointer;
-  position: relative;
-  border-radius: 10px;
-  transition: background-color 0.3s ease;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  transition: transform 0.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.door.closed {
+  transform: translateX(0%);
 }
 
 .door.open {
-  background: white;
+  transform: translateX(-85%); /* Stops sliding at 85% */
 }
 
 .tray-number {
-  font-size: 36px; /* Larger font size for tray numbers */
+  font-size: 32px; /* Larger number */
+  font-weight: bold;
   color: white;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: red;
-  color: white;
-  border: none;
-  cursor: pointer;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px; /* Larger font size for close button */
-}
-
+/* Larger items */
 .items {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
-  background-color: #eaeaea;
-  border-radius: 10px;
+  gap: 15px;
+  padding: 15px;
+  width: 100%;
+  height: 100%;
 }
 
+/* Bigger item sizing */
 .item {
-  width: 60px; /* Larger size for items */
+  width: 60px;  /* Increased size */
   height: 60px;
-  margin: 10px;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
 .item:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .circle {
@@ -92,9 +92,26 @@ h1 {
 }
 
 .square {
-  border-radius: 0;
+  border-radius: 8px;
 }
 
 .triangle {
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.star {
+  clip-path: polygon(
+    50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
+    50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%
+  );
+}
+
+/* Styling for empty tray message */
+.empty-tray {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  margin-top: 50px;
 }

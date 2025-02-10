@@ -1,62 +1,65 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
-function App() {
-  const [openTrays, setOpenTrays] = useState([]);
-  const [items, setItems] = useState({
-    1: [{ color: 'red', shape: 'circle' }, { color: 'blue', shape: 'square' }],
-    2: [{ color: 'green', shape: 'triangle' }],
-    3: [{ color: 'yellow', shape: 'circle' }],
-    4: [{ color: 'purple', shape: 'square' }],
-    5: [{ color: 'orange', shape: 'triangle' }],
-    6: [{ color: 'pink', shape: 'circle' }],
-    7: [{ color: 'brown', shape: 'triangle' }],
-    8: [{ color: 'black', shape: 'square' }],
-    9: [{ color: 'white', shape: 'circle' }],
-  });
+const SHAPES = ["circle", "square", "triangle", "hexagon", "star"];
+const COLORS = ["red", "blue", "yellow", "green", "orange", "purple"];
 
-  const toggleTray = (trayNumber) => {
-    if (openTrays.includes(trayNumber)) {
-      setOpenTrays(openTrays.filter((num) => num !== trayNumber));
-    } else {
-      setOpenTrays([...openTrays, trayNumber]);
-    }
+const VendingMachine = () => {
+  const [trays, setTrays] = useState(() =>
+    Array.from({ length: 9 }, (_, index) => {
+      const shape = SHAPES[index % SHAPES.length];
+      return {
+        shape,
+        colors: Array.from({ length: 3 }, () => COLORS[Math.floor(Math.random() * COLORS.length)]),
+      };
+    })
+  );
+
+  const [openTrays, setOpenTrays] = useState({});
+
+  const toggleTray = (index) => {
+    setOpenTrays((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
   };
 
-  const removeItem = (trayNumber, itemIndex) => {
-    setItems({
-      ...items,
-      [trayNumber]: items[trayNumber].filter((_, index) => index !== itemIndex),
-    });
+  const removeItem = (trayIndex, itemIndex) => {
+    setTrays((prevTrays) =>
+      prevTrays.map((tray, index) =>
+        index === trayIndex
+          ? { ...tray, colors: tray.colors.filter((_, i) => i !== itemIndex) }
+          : tray
+      )
+    );
   };
 
   return (
     <div className="App">
       <h1>Vending Machine Mockup</h1>
       <div className="vending-machine">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((trayNumber) => (
-          <div key={trayNumber} className="tray">
+        {trays.map((tray, trayIndex) => (
+          <div key={trayIndex} className="tray">
             <div
-              className={`door ${openTrays.includes(trayNumber) ? 'open' : 'closed'}`}
-              onClick={() => toggleTray(trayNumber)}
+              className={`door ${openTrays[trayIndex] ? "open" : "closed"}`}
+              onClick={() => toggleTray(trayIndex)}
             >
-              <span className="tray-number">{trayNumber}</span>
-              {openTrays.includes(trayNumber) && (
-                <button className="close-btn" onClick={() => toggleTray(trayNumber)}>
-                  X
-                </button>
-              )}
+              {openTrays[trayIndex] ? "" : <span className="tray-number">{trayIndex + 1}</span>}
             </div>
-            {openTrays.includes(trayNumber) && (
+            {openTrays[trayIndex] && (
               <div className="items">
-                {items[trayNumber]?.map((item, index) => (
-                  <div
-                    key={index}
-                    className={`item ${item.shape}`}
-                    style={{ backgroundColor: item.color }}
-                    onClick={() => removeItem(trayNumber, index)}
-                  />
-                ))}
+                {tray.colors.length > 0 ? (
+                  tray.colors.map((color, itemIndex) => (
+                    <div
+                      key={itemIndex}
+                      className={`item ${tray.shape}`}
+                      style={{ backgroundColor: color }}
+                      onClick={() => removeItem(trayIndex, itemIndex)}
+                    ></div>
+                  ))
+                ) : (
+                  <p className="empty-tray">Empty Tray</p>
+                )}
               </div>
             )}
           </div>
@@ -64,6 +67,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
-export default App;
+export default VendingMachine;
