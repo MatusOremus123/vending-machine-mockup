@@ -61,7 +61,7 @@ h1 {
 }
 
 .door.open {
-  transform: translateX(-85%);
+  transform: translateX(-95%);
 }
 
 .tray-number {
@@ -115,10 +115,10 @@ h1 {
   );
 }
 
-/* Posters Styling */
+
 .poster {
   width: 150px;
-  height: 200px;
+  height: 210px;
   background: #ffeb3b;
   border: 2px solid #333;
   border-radius: 10px;
