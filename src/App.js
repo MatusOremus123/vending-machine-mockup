@@ -10,7 +10,7 @@ const VendingMachine = () => {
   const [showScanner, setShowScanner] = useState(false);
   const fileInputRef = useRef(null);
 
-  // Item configuration
+  
   const ITEMS = {
     pen: "https://www.freeiconspng.com/uploads/bic-pen-png-picture-10.png",
     snack: "https://cdn-icons-png.flaticon.com/512/3076/3076094.png",

@@ -6,7 +6,7 @@
 
 h1 {
   margin-bottom: 20px;
-  color: #2E86C1;
+  color: #000000;
 }
 
 .room {
@@ -33,7 +33,7 @@ h1 {
 }
 
 .tray {
-  border: 3px solid #2E86C1;
+  border: 3px solid #020202;
   border-radius: 15px;
   position: relative;
   background-color: #f9f9f9;
@@ -90,8 +90,8 @@ h1 {
 }
 
 .item-image {
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
   padding: 8px;
   background: white;
